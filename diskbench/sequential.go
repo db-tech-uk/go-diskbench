@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/rockwell-uk/go-progress/progress"
-	"github.com/rockwell-uk/go-utils/fileutils"
-	"github.com/rockwell-uk/go-utils/timeutils"
+	"github.com/db-tech-uk/go-progress/progress"
+	"github.com/db-tech-uk/go-utils/fileutils"
+	"github.com/db-tech-uk/go-utils/timeutils"
 )
 
 var (
@@ -55,7 +55,7 @@ func (j *SequentialWritesJob) Run(job *progress.Job, input interface{}) (interfa
 	var took time.Duration
 
 	if bench, ok := input.(DiskBench); ok {
-		var duration time.Duration = time.Second * time.Duration(bench.Seconds)
+		duration := time.Second * time.Duration(bench.Seconds)
 		var filesWritten int
 
 		var condition bool
@@ -117,7 +117,7 @@ func writeLines(f *os.File, duration time.Duration) error {
 
 	go func(d *os.File, ctx context.Context) {
 		for i := 0; i <= DiskBenchNumLines; i++ {
-			if _, err := d.WriteString(fmt.Sprintf("%v\n", time.Now().UnixNano())); err != nil {
+			if _, err := fmt.Fprintf(d, "%v\n", time.Now().UnixNano()); err != nil {
 				return
 			}
 

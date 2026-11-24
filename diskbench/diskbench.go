@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/rockwell-uk/go-progress/progress"
-	"github.com/rockwell-uk/go-utils/fileutils"
+	"github.com/db-tech-uk/go-progress/progress"
+	"github.com/db-tech-uk/go-utils/fileutils"
 )
 
 const (
@@ -37,7 +37,7 @@ func (r DiskBenchResult) String() string {
 }
 
 func BenchDisk(d DiskBench) (DiskBenchResult, error) {
-	var jobName string = "Benchmarking Disk"
+	jobName := "Benchmarking Disk"
 	var took time.Duration
 	var absPath string
 
@@ -45,7 +45,7 @@ func BenchDisk(d DiskBench) (DiskBenchResult, error) {
 		return DiskBenchResult{}, fmt.Errorf("seconds cannot be less than 1 [%v]", d.Seconds)
 	}
 
-	var targetFolder string = fmt.Sprintf("%v/%v", d.Folder, FolderName)
+	targetFolder := fmt.Sprintf("%v/%v", d.Folder, FolderName)
 
 	if !fileutils.FolderExists(targetFolder) {
 		err := fileutils.MkDir(targetFolder)
